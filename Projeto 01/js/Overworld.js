@@ -47,7 +47,7 @@ class Overworld {
     }
 
     init() {
-        this.map = new OverworldMap(window.OverworldMaps.Kitchen);
+        this.map = new OverworldMap(window.OverworldMaps.LivingRoom);
 
         // chama o DirectinoInput.js
         this.directionInput = new DirectionInput();

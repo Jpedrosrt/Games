@@ -26,8 +26,8 @@ class OverworldMap {
 
 window.OverworldMaps = {
     LivingRoom: {
-        lowerSrc: "imagens/maps/DemoLower.png",
-        upperSrc: "imagens/maps/LivingRoom.png",
+        lowerSrc: "imagens/maps/LivingRoom.png",
+        upperSrc: "imagens/maps/DemoUpper.png",
         gameObjects: {
             hero: new Person({
                 isPlayerControlled: true,
