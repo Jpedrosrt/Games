@@ -1,10 +1,13 @@
 const utils = {
+
     withGrid(n) {
         return n * 16;
     },
+
     asGridCoord(x, y) {
         return `${x * 16},${y * 16}`
     },
+
     nxtPo(inX, inY, dire) {
         let x = inX;
         let y = inY;
@@ -20,5 +23,12 @@ const utils = {
         }
 
         return {x,y}
+    },
+
+    emitEvent(name, detail) {
+        const event = new CustomEvent(name, {
+            detail
+        });
+        document.dispatchEvent(event);
     }
 }

@@ -9,6 +9,8 @@ class OverworldMap {
 
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc;
+
+        this.isCutscenePlaying == true;
     }
 
     drawLowerImage(ctx, cameraPerson) {
@@ -31,11 +33,28 @@ class OverworldMap {
     }
 
     mountObjects() {
-        Object.values(this.gameObjects).forEach(o => {
+        Object.keys(this.gameObjects).forEach(key => {
 
-            o.mount(this);
+            let objeto = this.gameObjects[key];
+            objeto.id = key;
+
+            objeto.mount(this);
         })
     }
+
+    async startCutscene(events) {
+        this.isCutscenePlaying = true;
+    
+        for (let i=0; i<events.length; i++) {
+          const eventHandler = new OverworldEvent({
+            event: events[i],
+            map: this,
+          })
+          await eventHandler.init();
+        }
+    
+        this.isCutscenePlaying = false;
+      }
 
     addWall(x, y) {
         this.walls[`${x},${y}`] = true
@@ -59,15 +78,33 @@ window.OverworldMaps = {
         gameObjects: {
             hero: new Person({
                 isPlayerControlled: true,
-                x: utils.withGrid(4),
+                x: utils.withGrid(7),
                 y: utils.withGrid(6),
             
             }),
-            npc1: new GameObject({
+            npc1: new Person({
                 src: "imagens/characters/people/npc1.png",
-                x: utils.withGrid(6),
-                y: utils.withGrid(9)
-            })  
+                x: utils.withGrid(9),
+                y: utils.withGrid(6),
+                behaviorLoop: [
+                    { type: "stand", direction: "left", time: 800 },
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "stand", direction: "right", time: 1600 },
+                    { type: "stand", direction: "up", time: 200 },
+                ]
+            }),
+            npc2: new Person({
+                src: "imagens/characters/people/npc2.png",
+                x: utils.withGrid(3),
+                y: utils.withGrid(7),
+                behaviorLoop: [
+                    { type: "walk", direction: "left"},
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "up"},
+                    { type: "walk", direction: "right"},
+                    { type: "walk", direction: "down"},
+                ]
+            }) 
         },
         walls: {
             [utils.asGridCoord(4,4)] : true,
