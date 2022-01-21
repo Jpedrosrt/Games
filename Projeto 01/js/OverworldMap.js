@@ -10,7 +10,7 @@ class OverworldMap {
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc;
 
-        this.isCutscenePlaying == true;
+        this.isCutscenePlaying == false;
     }
 
     drawLowerImage(ctx, cameraPerson) {
@@ -85,26 +85,8 @@ window.OverworldMaps = {
             npc1: new Person({
                 src: "imagens/characters/people/npc1.png",
                 x: utils.withGrid(9),
-                y: utils.withGrid(6),
-                behaviorLoop: [
-                    { type: "stand", direction: "left", time: 800 },
-                    { type: "stand", direction: "up", time: 800 },
-                    { type: "stand", direction: "right", time: 1600 },
-                    { type: "stand", direction: "up", time: 200 },
-                ]
+                y: utils.withGrid(5),
             }),
-            npc2: new Person({
-                src: "imagens/characters/people/npc2.png",
-                x: utils.withGrid(3),
-                y: utils.withGrid(7),
-                behaviorLoop: [
-                    { type: "walk", direction: "left"},
-                    { type: "stand", direction: "up", time: 800 },
-                    { type: "walk", direction: "up"},
-                    { type: "walk", direction: "right"},
-                    { type: "walk", direction: "down"},
-                ]
-            }) 
         },
         walls: {
             [utils.asGridCoord(4,4)] : true,
@@ -130,7 +112,7 @@ window.OverworldMaps = {
             [utils.asGridCoord(10,8)] : true,
             [utils.asGridCoord(10,7)] : true,
             [utils.asGridCoord(10,6)] : true,
-            [utils.asGridCoord(11,5)] : true,
+            [utils.asGridCoord(10,5)] : true,
             [utils.asGridCoord(11,4)] : true,
             [utils.asGridCoord(10,3)] : true,
             [utils.asGridCoord(9,3)] : true,

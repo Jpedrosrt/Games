@@ -1,16 +1,26 @@
 class GameObject {
     constructor(config) {
+
+        // id para identificar o objeto
         this.id = null;
-        this.isMounted = false
+
+        this.isMounted = false;
+
+        // Recebe as coordenadas de cada gameobject(hero, npc1, npc2) em cada mapa
         this.x = config.x || 0;
         this.y = config.y || 0;
+
+        // Variavel relacionado a direção do personagem (por padrão ele olha para baixo)
         this.direction = config.direction || "down";
+
+        // Configuração dos Sprites
         this.sprite = new Sprite({
             gameObject: this,
             src: config.src || "imagens/characters/people/hero.png",
 
         });
 
+        //
         this.behaviorLoop = config.behaviorLoop || [];
         this.behaviorLoopIndex = 0;
 
