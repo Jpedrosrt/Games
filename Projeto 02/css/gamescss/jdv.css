@@ -1,0 +1,205 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    background-color: lightgrey;
+}
+
+.options {
+    flex: 1;
+    width: 260px;
+    height: 100px;
+    display: flex;
+    margin: 20px auto;
+}
+
+.seta {
+    margin: auto;
+}
+
+.btn-1 {
+    margin: auto 0px auto auto;
+}
+
+.btn-2 {
+    margin: auto auto auto 0px;
+}
+
+.btn-3 {
+    margin: auto 0px auto auto;
+}
+
+.btn-4 {
+    margin: auto auto auto 0px;
+}
+
+.btn {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 60px;
+}
+
+.btn-3:hover {
+    transition: 1s;
+    text-shadow: -5px 5px 0px gray;
+    color: #ff96ad;
+    top: -5px;
+    left: -5px;
+}
+
+.btn-3:target {
+    color: #d60a0a;
+    text-shadow: none;
+}
+
+.btn-4:hover {
+    transition: 1s;
+    text-shadow: -5px 5px 0px gray;
+    color: #5CE672;
+    top: -5px;
+    left: -5px;
+}
+
+.turn {
+    margin: 50px auto 20px;
+    font-size: 60px;
+    text-align: center;
+    text-shadow: -1px 1px 3px rgba(0, 0, 0, 0.377);
+    display: flex;
+}
+
+.player {
+    width: 100px;
+    margin: auto 0px 0px auto;
+    border-right: 1px;
+    border-right-style: solid;
+    border-right-color: gray;
+}
+
+.player2 {
+    width: 100px;
+    margin: auto 10px auto 0px;
+    border-right: 1px;
+    border-right-style: solid;
+    border-right-color: gray;
+}
+
+.pc {
+    width: 100px;
+    margin: auto 10px 0 0px;
+    border-right: 1px;
+    border-right-style: solid;
+    border-right-color: gray;
+}
+
+.atu {
+    width: 100px;
+    margin: auto auto auto 0px;
+}
+
+.atu button{
+    font-size: 20px;
+    background: none;
+    box-shadow: -1px 1px 2px grey;
+    color: grey;
+    padding: 2px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-shadow: none;
+    position: relative;
+    top: -15px;
+}
+
+.atu button:hover {
+    color: #6da6dead;
+    border-color: #6da6dead;
+    cursor: pointer;
+}
+
+.atu button:active {
+    box-shadow: inset 1px -1px 2px;
+    color: #6DA5DE;
+}
+
+
+
+.game {
+    display: table;
+    width: 318px;
+    margin: auto;
+    border: solid 3px #6DA5DE;
+    border-radius: 5px;
+}
+
+.box {
+    border: solid 3px #6DA5DE;
+    width: 100px;
+    height: 100px;
+    float: left; 
+}
+
+.box:hover {
+    background: #6da6de6b;
+    cursor: pointer;
+}
+
+.box p {
+    text-align: center;
+    font-size: 60px;
+    margin: 15px 0px;
+    text-shadow: -1px 1px 3px rgba(0, 0, 0, 0.377);
+}
+
+.endgame {
+    position: absolute;
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    flex-direction: column;
+}
+
+.endgame_text {
+    color: white;
+    font-size: 5rem;
+    margin: 0;
+}
+
+.endgame_button {
+    font-size: 2.5rem;
+    background: none;
+    border-color: #5CE672;
+    box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-shadow: none;
+    margin-top: 16px;
+    color: #5ce673c4
+}
+
+.endgame_button:hover {
+    color: #ff96ad;
+    border-color: #ff96ad;
+    cursor: pointer;
+}
+
+.escon {
+    display: none;
+}

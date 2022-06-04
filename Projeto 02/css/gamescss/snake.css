@@ -1,0 +1,41 @@
+body {
+    background-color: lightgrey;
+    overflow: hidden;
+    display: grid;
+    grid-template-areas:
+    ". top_info"
+    "side_info canvas"
+    ;
+    font-size: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+ul {
+    margin: 0;
+    font-size: 30px;
+}
+
+.side_info {
+    grid-area: side_info;
+}
+
+.bestscore {
+    color: rgb(201, 151, 26);
+}
+
+.top_info {
+    width: 700px;
+    display: flex;
+    justify-content: space-between;
+    grid-area: top_info;
+}
+
+.canvas {
+    grid-area: canvas;
+}
+
+.escond {
+    display: none;
+}

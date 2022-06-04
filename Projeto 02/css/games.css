@@ -1,0 +1,22 @@
+.games {
+    display: flex;
+    gap: 5px;
+}
+
+.game {
+    background-color: lightgrey;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.game:hover {
+    width: 100px;
+    height: 100px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
