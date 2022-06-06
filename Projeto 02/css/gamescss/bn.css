@@ -51,18 +51,78 @@
     grid-template-rows: repeat(11, 26px);
 }
 
-.pl1_org {
+.org {
     margin-top: 20px;
     border-radius: 5px;
     border: solid 1px;
-    height: 60px;
+    height: 140px;
+    display: flex;
 }
 
-.pl2_org {
-    margin-top: 20px;
-    border-radius: 5px;
-    border: solid 1px;
-    height: 60px;
+.navs_pl1 {
+    display: flex;
+}
+
+.navs_pl2 {
+    display: flex;
+}
+
+.btn {
+    border: none;
+    height: 140px;
+    width: 30px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset {
+    background-color: rgba(100, 148, 237, 0.719);
+    border-radius: 3px 0px 0px;
+}
+
+.begin {
+    background-color: rgba(172, 255, 47, 0.767);
+    border-radius: 0px 3px 3px 0px;
+    border-left: dashed 1px #808080;
+}
+
+.nav {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    row-gap: 10px;
+    border-left: dashed 1px grey;
+    width: 55px;
+}
+.nav_1 {
+    width: 25px;
+    height: 25px;
+    background-color: gray;
+    cursor: pointer;
+}
+
+.nav_2 {
+    width: 25px;
+    height: 50px;
+    background-color: gray;
+    cursor: pointer;
+}
+
+.nav_3 {
+    width: 25px;
+    height: 75px;
+    background-color: gray;
+    cursor: pointer;
+}
+
+.nav_4 {
+    width:25px;
+    height: 100px;
+    background-color: gray;
+    cursor: pointer;
 }
 
 .coord {
