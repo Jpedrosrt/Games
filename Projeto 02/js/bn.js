@@ -11,9 +11,49 @@ const iconPl2 = document.createElement("lord-icon")
 const letr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] 
 
 let vsPc = false
-let Pos = {"nav_4": [], "nav_3": [], "nav_2": [], "nav_1": [],}
+let Pos = {"v": [], "h": []}
+let aux = 0
 
-const rnd       = min => max => Math.floor(Math.random() * max) + min
+const rnd = min => max => Math.floor(Math.random() * (max - min)) + min
+
+const localValid = (v, tam, isVertical) => {
+    let auxbool
+    const verif = (x, y) => x == y || x == y - 1 || x == y + 1 || x == y - 10 || x == y + 10 || x == y - 9 || x == y - 11
+    
+    if (isVertical) {
+        for(let i = 0; i < tam; i++) {
+            for(let j = 0; j < tam; j++) {
+                console.log(`1 - ${Pos[`v`][j]} and ${(v - i * 10)} - ${Pos[`v`][j] == (v - i * 10)}`)
+                console.log(`2 - ${Pos[`v`][j]} and ${(v - i * 10) - 1} - ${Pos[`v`][j] == (v - i * 10) - 1}`)
+                console.log(`3 - ${Pos[`v`][j]} and ${(v - i * 10) + 1} - ${Pos[`v`][j] == (v - i * 10) + 1}`)
+                console.log(`4 - ${Pos[`v`][j]} and ${(v - i * 10) - 10} - ${Pos[`v`][j] == (v - i * 10) - 10}`)
+                console.log(`5 - ${Pos[`v`][j]} and ${(v - i * 10) - 9} - ${Pos[`v`][j] == (v - i * 10) - 9}`)
+                console.log(`6 - ${Pos[`v`][j]} and ${(v - i * 10) - 11} - ${Pos[`v`][j] == (v - i * 10) - 11}`)
+            }
+            console.log(Pos["v"].some(x => verif(x, v - i*10)))
+            auxbool = auxbool || Pos["v"].some(x => verif(x,v - i*10))
+        }
+        console.log(!auxbool)
+        return !auxbool
+    }
+}
+
+const rndNumber = x => isVertical => {
+    let n = rnd((10 * x - 9))(101)
+    if (isVertical) {
+        if (Pos[`v`].length == 0) {
+            return n
+        } else {
+            console.log(`Valor aleatorio ${n}`)
+            console.log(`lista ${Pos[`v`]}`)
+            if (localValid(n, x, isVertical)) {
+                return n
+            } else {
+                return rndNumber(x)(isVertical)
+            }
+        }
+    }
+}
 
 function setAttributes(e, attrs) {
     for (let key in attrs) {
@@ -50,29 +90,22 @@ function set_tab(x) {
 }
 
 function rndPosNav(e, tam, quant) {
-    const coords = document.querySelectorAll(`.coord_${e.classList[0]}`)
-    let isVertical = Math.random() < 0.5;
-    let aux = 0
-    let aux2 = []
+    let isVertical = true //Math.random() < 0.5;
+
     if (isVertical) { //FICA LIGADO PORRA
         for (let i = 0; i < quant; i++) {
-            aux = rnd(10 * tam - 9)(100)
-            console.log(aux)
-            aux2.push[aux]
-            //console.log(10 * tam - 9)
-            for(let b = 0; b < tam - 1; b++) {
+            aux = rndNumber(tam)(isVertical)
+            for(let b = 0; b < tam; b++) {
+                Pos[`v`].unshift(aux)
                 aux -= 10
-                aux2.push(aux)
             }
-            Pos[`nav_${tam}`].push(aux2)
-            aux2 = []
             aux = 0
         }
     }
-    console.log(Pos)
 }
 
 function gameChoice(e) {
+    const coords = document.querySelectorAll(`.coord_pl1`)
     op.classList.add('escond')
     game.classList.remove('escond')
     e.path[4].classList.add('escond')
@@ -82,6 +115,15 @@ function gameChoice(e) {
         setAttributes(iconPl2, {"src": "https://cdn.lordicon.com/dxjqoygy.json", "trigger": "hover", "delay": "1500", "style": "width:100px;height:100px"});
         infopl1.appendChild(iconPl2)
         infopl2.appendChild(iconPl1)
+        console.log(Pos)
+        Object.keys(Pos).map(key => {
+            Pos[key].map(n => {
+                coords.forEach(coords => {
+                    if(coords.classList.contains(n))
+                        coords.classList.add('navs')      
+                })
+            })
+        })
     } else {
         vsPc = false
         setAttributes(iconPl1, {"src": "https://cdn.lordicon.com/dxjqoygy.json", "trigger": "hover", "delay": "1500", "style": "width:100px;height:100px"});
@@ -91,8 +133,10 @@ function gameChoice(e) {
     }
 }
 
+rndPosNav(pl2, 3, 2)
+
 set_tab(pl1)
 set_tab(pl2)
-rndPosNav(pl2, 3, 2)
+
 
 op.addEventListener("click", gameChoice, { once: true})
