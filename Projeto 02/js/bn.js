@@ -16,40 +16,68 @@ let aux = 0
 
 const rnd = min => max => Math.floor(Math.random() * (max - min)) + min
 
+const verif = (x, y) => x == y || x == y - 1 || x == y + 1 || x == y - 10 || x == y + 10 || x == y - 9 || x == y + 9 || x == y + 11 || x == y - 11
+
 const localValid = (v, tam, isVertical) => {
     let auxbool
-    const verif = (x, y) => x == y || x == y - 1 || x == y + 1 || x == y - 10 || x == y + 10 || x == y - 9 || x == y - 11
-    
     if (isVertical) {
         for(let i = 0; i < tam; i++) {
-            for(let j = 0; j < tam; j++) {
-                console.log(`1 - ${Pos[`v`][j]} and ${(v - i * 10)} - ${Pos[`v`][j] == (v - i * 10)}`)
-                console.log(`2 - ${Pos[`v`][j]} and ${(v - i * 10) - 1} - ${Pos[`v`][j] == (v - i * 10) - 1}`)
-                console.log(`3 - ${Pos[`v`][j]} and ${(v - i * 10) + 1} - ${Pos[`v`][j] == (v - i * 10) + 1}`)
-                console.log(`4 - ${Pos[`v`][j]} and ${(v - i * 10) - 10} - ${Pos[`v`][j] == (v - i * 10) - 10}`)
-                console.log(`5 - ${Pos[`v`][j]} and ${(v - i * 10) - 9} - ${Pos[`v`][j] == (v - i * 10) - 9}`)
-                console.log(`6 - ${Pos[`v`][j]} and ${(v - i * 10) - 11} - ${Pos[`v`][j] == (v - i * 10) - 11}`)
+            if(Pos["v"].length == 0) {
+                auxbool = auxbool || Pos["h"].some(x => verif(x,v - i*10))
+            } else if (Pos["h"].length == 0){
+                auxbool = auxbool || Pos["v"].some(x => verif(x,v - i*10))
+            } else {
+                auxbool = auxbool || Pos["v"].some(x => verif(x,v - i*10)) || Pos["h"].some(x => verif(x,v - i*10))
             }
-            console.log(Pos["v"].some(x => verif(x, v - i*10)))
-            auxbool = auxbool || Pos["v"].some(x => verif(x,v - i*10))
         }
-        console.log(!auxbool)
+        return !auxbool
+    } else {
+        for(let i = 0; i < tam; i++) {
+            if(Pos["v"].length == 0) {
+                auxbool = auxbool || Pos["h"].some(x => verif(x,v - i))
+            } else if (Pos["h"].length == 0){
+                auxbool = auxbool || Pos["v"].some(x => verif(x,v - i))
+            } else {
+                auxbool = auxbool || Pos["v"].some(x => verif(x,v - i)) || Pos["h"].some(x => verif(x,v - i))
+            }
+        }
         return !auxbool
     }
 }
 
-const rndNumber = x => isVertical => {
-    let n = rnd((10 * x - 9))(101)
+const rndNumber = tam => isVertical => {
     if (isVertical) {
-        if (Pos[`v`].length == 0) {
+        let n = rnd((10 * tam - 9))(101)
+        if (Pos[`v`].length == 0 && Pos[`h`].length == 0) {
             return n
         } else {
-            console.log(`Valor aleatorio ${n}`)
-            console.log(`lista ${Pos[`v`]}`)
-            if (localValid(n, x, isVertical)) {
+            if (localValid(n, tam, isVertical)) {
                 return n
             } else {
-                return rndNumber(x)(isVertical)
+                return rndNumber(tam)(isVertical)
+            }
+        }
+    } else {
+        const auxHori = e => {
+            let aux1 
+            for(let i = 0; i < 10; i++) {
+                aux1 = aux1 || (e < tam + (10 * i) && e > i * 10)
+            }
+            
+            return aux1
+        }
+        let n = rnd((1))(101)
+        if (auxHori(n)) {
+            return rndNumber(tam)(isVertical)
+        } else {
+            if (Pos[`h`].length == 0 && Pos[`v`].length == 0) {
+                return n
+            } else {
+                if (localValid(n, tam, isVertical)) {
+                    return n
+                } else {
+                    return rndNumber(tam)(isVertical)
+                }
             }
         }
     }
@@ -90,19 +118,28 @@ function set_tab(x) {
 }
 
 function rndPosNav(e, tam, quant) {
-    let isVertical = true //Math.random() < 0.5;
+    for (let i = 0; i < quant; i++) {
+        let isVertical = Math.random() < 0.5;
 
-    if (isVertical) { //FICA LIGADO PORRA
-        for (let i = 0; i < quant; i++) {
+        if (isVertical) { 
             aux = rndNumber(tam)(isVertical)
             for(let b = 0; b < tam; b++) {
                 Pos[`v`].unshift(aux)
                 aux -= 10
             }
-            aux = 0
+        } else {
+            
+            aux = rndNumber(tam)(isVertical)
+            for(let b = 0; b < tam; b++) {
+                Pos[`h`].unshift(aux)
+                aux--
+            }
         }
+        aux = 0
     }
 }
+    
+
 
 function gameChoice(e) {
     const coords = document.querySelectorAll(`.coord_pl1`)
@@ -133,7 +170,10 @@ function gameChoice(e) {
     }
 }
 
+rndPosNav(pl2, 4, 1)
 rndPosNav(pl2, 3, 2)
+rndPosNav(pl2, 2, 3)
+rndPosNav(pl2, 1, 4)
 
 set_tab(pl1)
 set_tab(pl2)
