@@ -59,6 +59,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .coord:hover {
@@ -83,11 +84,14 @@
 .emp {
     color: cadetblue;
     background-color: lightgrey;
-    padding-top: 5px;
 }
 
 .emp:after {
     content: "\FE4C";
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
 }   
 
 .mark::after {
