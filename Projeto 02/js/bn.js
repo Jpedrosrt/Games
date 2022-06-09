@@ -12,12 +12,107 @@ const letr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
 let vsPc = false
 let turnPl1 = false
+
+
 let Pos = {"v": [], "h": []}
+let NavObj = {
+    4 : {
+        'pos': [],
+        'per': []
+    },
+    3 : {
+        'pos': [],
+        'per': []
+    },
+    2 : {
+        'pos': [],
+        'per': []
+    },
+    1 : {
+        'pos': [],
+        'per': []
+    }
+}
+
 let aux = 0
 
 const rnd = min => max => Math.floor(Math.random() * (max - min)) + min
 
 const verif = (x, y) => x == y || x == y - 1 || x == y + 1 || x == y - 10 || x == y + 10 || x == y - 9 || x == y + 9 || x == y + 11 || x == y - 11
+
+const peri = e => t => isVertical =>  {
+    
+    if (isVertical) {
+
+    } else {
+        if (t == 'all') {
+            console.log(e)
+            switch (true) {
+                case (e < 10 && e > 1):
+                    return [e - 1, e + 9, e + 10, e + 11, e + 1]
+                case (e > 10 && e % 10 == 0):
+                    return [e - 10, e - 11, e - 1, e + 9, e + 10]
+                case (e > 91 && e < 100):
+                    return [e - 10, e - 11, e - 1, e + 1, e - 9]
+                case (e > 10 && e % 10 == 1):
+                    return [e - 10, e + 10, e + 11, e + 1, e - 9]
+                case (e == 1):
+                    return [e + 10, e + 11, e + 1]
+                case (e == 10):
+                    return [e - 1, e + 9, e + 10]
+                case(e == 91):
+                    return [e - 10, e - 9, e + 1]
+                case (e == 100):
+                    return [e - 10, e - 11, e - 1]
+                default:
+                    return [e - 10, e - 11, e - 1, e + 9, e + 10, e + 11, e + 1, e - 9]
+            }
+        } else {
+            switch (true) {
+                case (e < 10 && e > 1):
+                    t = `top-${t}`
+                    break  
+                case (e > 10 && e % 10 == 0):
+                    t = ''
+                    break
+                case (e > 91 && e < 100):
+                    t = `bot-${t}`
+                    break
+                case (e > 10 && e % 10 == 1):
+                    t = ''
+                    break
+                case (e == 1 || e == 10):
+                    t = `top-m`
+                    break
+                case (e == 91 || e == 100):
+                    t = `bot-m`
+                    break
+                default:
+                    break
+            }
+            switch(t) {
+                case 'l':
+                    return [e - 10, e - 11, e - 1, e + 9, e + 10]
+                case 'r':
+                    return [e - 10, e - 9, e + 1, e + 11, e + 10]
+                case 'top-l':
+                    return [e - 1, e + 9, e + 10]
+                case 'top-r':
+                    return [e + 1, e + 11, e + 10]
+                case 'top-m':
+                    return [e + 10]
+                case 'bot-l':
+                    return [e - 10, e - 11, e - 1]
+                case 'bot-r':
+                    return [e - 10, e - 9, e + 1]
+                case 'bot-m':
+                    return [e - 10]  
+                default:
+                    return [e - 10, e + 10]
+            }
+        }
+    }
+} 
 
 const localValid = (v, tam, isVertical) => {
     let auxbool
@@ -118,23 +213,63 @@ function set_tab(x) {
     }
 }
 
-function rndPosNav(e, tam, quant) {
+function rndPosNav(tam, quant) {
     for (let i = 0; i < quant; i++) {
-        let isVertical = Math.random() < 0.5;
-
+        let isVertical = false //Math.random() < 0.5;
+        let auxList = []
+        let auxListp = []
         if (isVertical) { 
             aux = rndNumber(tam)(isVertical)
             for(let b = 0; b < tam; b++) {
+                // switch (b) {
+                //     case 0:
+                //         if (tam == 0) {    
+                //             auxListp.push(peri(aux)('all'))
+                //             break
+                //         } else {
+                //             auxListp.push(peri(aux)('l'))
+                //             break
+                //         }
+                //     case tam:
+                //         auxListp.push(peri(aux)('r'))
+                //         break
+                //     default:
+                //         auxListp.push(peri(aux)(''))
+                //         break
+                // }
                 Pos[`v`].unshift(aux)
+                auxList.push(aux)
                 aux -= 10
             }
+            //NavObj[tam]['pos'].push(auxList)
+            //NavObj[tam]['per'].push(auxListp)
         } else {
             
             aux = rndNumber(tam)(isVertical)
             for(let b = 0; b < tam; b++) {
+                switch (b) {
+                    case 0:
+                        if (tam == 1) {    
+                            console.log(aux)
+                            auxListp.push(peri(aux)('all')(isVertical))
+                            break
+                        } else {
+                            auxListp.push(peri(aux)('r')(isVertical))
+                            break
+                        }
+                    case tam - 1:
+                        auxListp.push(peri(aux)('l')(isVertical))
+                        break
+                    default:
+                        auxListp.push(peri(aux)('')(isVertical))
+                        break
+                }
                 Pos[`h`].unshift(aux)
+                auxList.push(aux)
                 aux--
             }
+            NavObj[tam]['pos'].push(auxList)
+            NavObj[tam]['per'].push(auxListp)
         }
         aux = 0
     }
@@ -173,14 +308,33 @@ function gameChoice(e) {
 }
 
 function gameBe(e) {
-    const auxPaint = list => {
-
+    const coord = document.querySelectorAll('.coord_pl1')
+    const lastVerif = va => {
+        Object.keys(NavObj).map(key => {
+            if(NavObj[key]['pos'].map(lists => {
+                    lists.map(x => (x == va) && NavObj[key]['pos'].length == 0) })) {
+                        NavObj[key]['per'].map(y => {
+                            coord.forEach(z => {
+                                if (z == y) {
+                                    z.classList.add("emp")
+                                }
+                            })
+                        })
+                    } else if ( NavObj[key]['pos'].map(lists => lists.some(x => x == va) )) {
+                        NavObj[key]['pos'].map(lists => {
+                            lists = lists.filter(x => x != va)
+                        })
+                    }
+        })
     }
     if(vsPc && e.target.classList.contains("coord_pl1")) {
-        if (Pos["h"].includes(Number(e.target.classList[1]))){
+        console.log(NavObj)
+        let select = Number(e.target.classList[1])
+        if (Pos["h"].includes(select)){
             e.target.classList.add("mark")
-            Pos["h"]
-        } else if (Pos["v"].includes(Number(e.target.classList[1]))) {
+            lastVerif(select)
+            
+        } else if (Pos["v"].includes(select)) {
             e.target.classList.add("mark")
 
         } else {
@@ -189,11 +343,12 @@ function gameBe(e) {
     }
 }
 
-rndPosNav(pl2, 4, 1)
-rndPosNav(pl2, 3, 2)
-rndPosNav(pl2, 2, 3)
-rndPosNav(pl2, 1, 4)
+rndPosNav(4, 1)
+rndPosNav(3, 2)
+rndPosNav(2, 3)
+rndPosNav(1, 4)
 
+console.log(Pos)
 set_tab(pl1)
 set_tab(pl2)
 
