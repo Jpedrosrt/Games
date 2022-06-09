@@ -46,7 +46,6 @@ const peri = e => t => isVertical =>  {
 
     } else {
         if (t == 'all') {
-            console.log(e)
             switch (true) {
                 case (e < 10 && e > 1):
                     return [e - 1, e + 9, e + 10, e + 11, e + 1]
@@ -250,7 +249,6 @@ function rndPosNav(tam, quant) {
                 switch (b) {
                     case 0:
                         if (tam == 1) {    
-                            console.log(aux)
                             auxListp.push(peri(aux)('all')(isVertical))
                             break
                         } else {
@@ -288,7 +286,6 @@ function gameChoice(e) {
         setAttributes(iconPl2, {"src": "https://cdn.lordicon.com/dxjqoygy.json", "trigger": "hover", "delay": "1500", "style": "width:100px;height:100px"});
         infopl1.appendChild(iconPl2)
         infopl2.appendChild(iconPl1)
-        console.log(Pos)
         Object.keys(Pos).map(key => {
             Pos[key].map(n => {
                 coords.forEach(coords => {
@@ -311,24 +308,25 @@ function gameBe(e) {
     const coord = document.querySelectorAll('.coord_pl1')
     const lastVerif = va => {
         Object.keys(NavObj).map(key => {
-            if(NavObj[key]['pos'].map(lists => {
-                    lists.map(x => (x == va) && NavObj[key]['pos'].length == 0) })) {
-                        NavObj[key]['per'].map(y => {
-                            coord.forEach(z => {
-                                if (z == y) {
-                                    z.classList.add("emp")
+            NavObj[key]['pos'].map(lists => {
+                if(lists.includes(va)) {
+                    lists.splice(lists.indexOf(va), 1)
+                } 
+                if (lists.length == 0) {
+                    coord.forEach(w => {
+                        NavObj[key]['per'][NavObj[key]['pos'].indexOf(lists)].map(lists => {
+                            lists.map(p => {
+                                if (Number(w.classList[1]) == p) {
+                                    w.classList.add("emp")
                                 }
-                            })
+                            }) 
                         })
-                    } else if ( NavObj[key]['pos'].map(lists => lists.some(x => x == va) )) {
-                        NavObj[key]['pos'].map(lists => {
-                            lists = lists.filter(x => x != va)
-                        })
-                    }
+                    })
+                }
+            })
         })
     }
     if(vsPc && e.target.classList.contains("coord_pl1")) {
-        console.log(NavObj)
         let select = Number(e.target.classList[1])
         if (Pos["h"].includes(select)){
             e.target.classList.add("mark")
@@ -348,7 +346,6 @@ rndPosNav(3, 2)
 rndPosNav(2, 3)
 rndPosNav(1, 4)
 
-console.log(Pos)
 set_tab(pl1)
 set_tab(pl2)
 
