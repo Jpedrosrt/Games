@@ -56,6 +56,9 @@
     height: 25px;
     background-color: cadetblue;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .coord:hover {
@@ -74,7 +77,21 @@
 }
 
 .navs {
-    background-color: grey;
+    background-color:grey;
+}
+
+.emp {
+    color: cadetblue;
+    background-color: lightgrey;
+    padding-top: 5px;
+}
+
+.emp:after {
+    content: "\FE4C";
+}   
+
+.mark::after {
+    content: "\274c";
 }
 
 .escond {

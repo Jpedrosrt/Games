@@ -11,6 +11,7 @@ const iconPl2 = document.createElement("lord-icon")
 const letr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] 
 
 let vsPc = false
+let turnPl1 = false
 let Pos = {"v": [], "h": []}
 let aux = 0
 
@@ -161,12 +162,30 @@ function gameChoice(e) {
                 })
             })
         })
+
     } else {
         vsPc = false
         setAttributes(iconPl1, {"src": "https://cdn.lordicon.com/dxjqoygy.json", "trigger": "hover", "delay": "1500", "style": "width:100px;height:100px"});
         setAttributes(iconPl2, {"src": "https://cdn.lordicon.com/dxjqoygy.json", "trigger": "hover", "delay": "1500", "style": "width:100px;height:100px"});
         infopl1.appendChild(iconPl1)
         infopl2.appendChild(iconPl2)
+    }
+}
+
+function gameBe(e) {
+    const auxPaint = list => {
+
+    }
+    if(vsPc && e.target.classList.contains("coord_pl1")) {
+        if (Pos["h"].includes(Number(e.target.classList[1]))){
+            e.target.classList.add("mark")
+            Pos["h"]
+        } else if (Pos["v"].includes(Number(e.target.classList[1]))) {
+            e.target.classList.add("mark")
+
+        } else {
+            e.target.classList.add("emp")
+        }
     }
 }
 
@@ -178,5 +197,11 @@ rndPosNav(pl2, 1, 4)
 set_tab(pl1)
 set_tab(pl2)
 
-
 op.addEventListener("click", gameChoice, { once: true})
+
+
+const coords = document.querySelectorAll('.coord')
+
+coords.forEach( coord => {
+        coord.addEventListener("click", gameBe, { once: true})
+})
